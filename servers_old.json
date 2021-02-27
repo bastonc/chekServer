@@ -1,0 +1,26 @@
+[
+  {
+    "name_server": "google.com",
+    "url_server": "https://google.com",
+    "id_server": 1,
+    "shift_server": 0
+  },
+  {
+    "name_server": "yandex.ru",
+    "url_server": "https://yandex.ru",
+    "id_server": 2,
+    "shift_server": 0
+  },
+  {
+    "name_server": "127.0.0.1",
+    "url_server": "http://127.0.0.1:8000/urtr/",
+    "id_server": 3,
+    "shift_server": 0
+  },
+  {
+    "name_server": "google.com",
+    "url_server": "https://google.com",
+    "id_server": 3,
+    "shift_server": 0
+  }
+]

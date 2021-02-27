@@ -1,0 +1,51 @@
+class CheckCircle(QObject):
+    #error = QtCore.PYQT_SIGNAL(object)
+    def __init__(self, parrent):
+        super().__init__()
+        self.parrent = parrent
+        #self.run()
+
+    def run(self):
+        ok_backround = "background: #238D43;"
+        error_background = "background: #BF4030;"
+        reset_background = "background: #2F2A29;"
+        print("sdsd")
+        while True:
+            for i, server in enumerate(self.parrent.serversList):
+                print(server)
+                try:
+                    answer = requests.get(server['url_server'], timeout=(0.04, 3))
+                    #print(answer.status_code)
+                    if answer:
+                        if answer.status_code == 200:
+                            self.parrent.string_list[i]['green'].setStyleSheet(ok_backround)
+                            self.parrent.string_list[i]['red'].setStyleSheet(reset_background)
+                            #self.parrent.string_list[i]['red']
+                            self.parrent.string_list[i]['green'].setText(str(answer.status_code))
+                            self.parrent.string_list[i]['red'].setText('')
+                        else:
+                            #print(answer.status_code)
+                            self.parrent.string_list[i]['red'].setStyleSheet(error_background)
+                            self.parrent.string_list[i]['green'].setStyleSheet(reset_background)
+                            self.parrent.string_list[i]['red'].setText(str(answer.status_code))
+                            self.parrent.string_list[i]['green'].setText('')
+                    else:
+                        self.parrent.string_list[i]['red'].setStyleSheet(error_background)
+                        self.parrent.string_list[i]['green'].setStyleSheet(reset_background)
+                        self.parrent.string_list[i]['red'].setText(str(answer.status_code))
+                        self.parrent.string_list[i]['green'].setText('')
+
+
+                except requests.exceptions.RequestException:
+                    self.parrent.string_list[i]['red'].setStyleSheet(error_background)
+                    self.parrent.string_list[i]['green'].setStyleSheet(reset_background)
+                    self.parrent.string_list[i]['red'].setText("Not in DNS")
+                    self.parrent.string_list[i]['green'].setText('')
+                except requests.exceptions.ReadTimeout:
+                    self.parrent.string_list[i]['red'].setStyleSheet(error_background)
+                    self.parrent.string_list[i]['green'].setStyleSheet(reset_background)
+                    self.parrent.string_list[i]['red'].setText("Ntwrk error")
+                    self.parrent.string_list[i]['green'].setText('')
+                time.sleep(0.3)
+            time.sleep(10)
+            print("work")
